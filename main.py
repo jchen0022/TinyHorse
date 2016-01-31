@@ -25,7 +25,7 @@ class Person(object):
             newStock = Stock(Share(tick), tick)
             self.all_stocks[tick] = newStock
         else:
-            self.all_stock[tick].shares += num
+            self.all_stock[tick].numShares += num
         self.history[stock.tick][date] = StockHistory(Share(tick), tick, num, date)       #CHANGE THIS DATE NOT WORKING
     def getDatePrice(self, share):
         """Returns dict containing all {date: StockHistory}"""
@@ -42,10 +42,10 @@ class Portfolio(object):
 
 class Stock(object):
     """All shares of a stock"""
-    def __init__(self, share, tick):
+    def __init__(self, share, tick, num):
         self.stock_info = stock_info #provided by yahoo-finance module
         self.tick = tick
-        self.shares = 1
+        self.numShares = 0
     def getPrice(self):
         self.share.get_price()
 
