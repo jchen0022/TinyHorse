@@ -6,27 +6,45 @@ How do you instantiate a share? Use its ticker symbol.
 ibm = Share("IBM")
 
 """
+"""
+Initialize Person with name:
+
+
+"""
 class Person(object):
     def __init__(self, name):
         self.name = name
-        self.portfolios = [] 
+        self.portfolios = {} 
         self.all_stocks = {} #KEEPS TRACK OF GENERIC TYPES OF STOCK OWNED
+        """
+        all_stocks holds all the stock types
+        format: {String tick, Stock}
+        self.portfolio: a
+        """
         self.history = {} #KEEPS TRACK OF STOCK PURCHASE INFORMATION
+        """
+        Keeps track of the stock information.
+        Automatically updates when buyShares is called
+        Format: {tick: {date: purchase_information}}
+        """
     def addPortfolio(self, title):
-        self.portfolio.append(Portfolio(title))
-    def addToPortfolio(self, portfolio, tick):
+        self.portfolio[title] = Portfolio(title)
+    def addToPortfolio(self, title, tick):
+        """Takes in a portfolio title and stock's tick and 
+        adds stock into portfolio
+        Stock must already be owned by Person"""
         if tick not in self.all_stocks:
             raise Exception
         stock_location = self.all_stocks[tick]
-        self.portfolio.addStock(tick, stock_location)
-    def buyShares(self, ticks, num, date):
-        """add to date and price"""
+        self.portfolio[title].addStock(tick, stock_location)
+    def buyShares(self, tick, num_shares, date):
+        """Buys (num_shares) shares of (tick) stock. Then documents into Person.history"""
         if tick not in self.all_stocks:
-            newStock = Stock(Share(tick), tick)
-            self.all_stocks[tick] = newStock
+            new_stock = Stock(Share(tick), tick)
+            self.all_stocks[tick] = new_stock
         else:
-            self.all_stock[tick].numShares += num
-        self.history[stock.tick][date] = StockHistory(Share(tick), tick, num, date)       #CHANGE THIS DATE NOT WORKING
+            self.all_stock[tick].num_shares += num_shares
+        self.history[stock.tick][date] = StockHistory(Share(tick), tick, num_shares, date)       #CHANGE THIS DATE NOT WORKING
     def getDatePrice(self, share):
         """Returns dict containing all {date: StockHistory}"""
         return self.history[share.tick]
@@ -42,16 +60,24 @@ class Portfolio(object):
 
 class Stock(object):
     """All shares of a stock"""
-    def __init__(self, share, tick, num):
+    def __init__(self, share, tick, num_shares):
         self.stock_info = stock_info #provided by yahoo-finance module
         self.tick = tick
-        self.numShares = 0
+        self.num_shares = 0
     def getPrice(self):
         self.share.get_price()
+    def getNumShares(self):
+        return self.num_shares
 
 class StockHistory(Stock):
     """For getting information on stocks previously bought"""
-    def __init__(self, share, tick, num, date):
+    def __init__(self, share, tick, num_shares, date):
         Stock.__init__(self, share, tick)
+        self.price = share.getprice()
         self.date = date
-        self.num = num
+        self.num_shares = num_shares
+    def getPrice(self):
+        """get price of stock at the time of purchase"""
+        return self.price
+    def getNumShares(self):
+        return self.num_shares
