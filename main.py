@@ -10,8 +10,8 @@ class Person(object):
     def __init__(self, name):
         self.name = name
         self.portfolios = [] 
-        all_stocks = {} #KEEPS TRACK OF GENERIC TYPES OF STOCK OWNED
-        history = {} #KEEPS TRACK OF STOCK PURCHASE INFORMATION
+        self.all_stocks = {} #KEEPS TRACK OF GENERIC TYPES OF STOCK OWNED
+        self.history = {} #KEEPS TRACK OF STOCK PURCHASE INFORMATION
     def addPortfolio(self, portfolio):
         self.portfolio.append(portfolio)
     def addToPortfolio(self, stock, portfolio):
@@ -23,7 +23,7 @@ class Person(object):
             self.all_stocks[tick] = newStock
         else:
             self.all_stock[tick].shares += num
-        history[stock.tick][date] = StockHistory(Share(tick), tick, num, date)       #CHANGE THIS DATE NOT WORKING
+        self.history[stock.tick][date] = StockHistory(Share(tick), tick, num, date)       #CHANGE THIS DATE NOT WORKING
     def getDatePrice(self, share):
         """Returns dict containing all {date: StockHistory}"""
         return self.history[share.tick]
