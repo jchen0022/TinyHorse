@@ -77,7 +77,7 @@ class StockHistory(Stock):
         self.date = date
         self.num_shares = num_shares
     def getPrice(self):
-        """get price of stock at the time of purchase"""
+        """Get price of stock at the time of purchase"""
         return self.price
     def getNumShares(self):
         return self.num_shares
