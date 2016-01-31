@@ -1,12 +1,13 @@
 from util import *
+from main import *
+sharesList = ["ibm", "qcom", "scty", "amzn", "ilmn"]
 
-ibm = Share("IBM")
-qcom = Share("QCOM")
-scty = Share("SCTY")
+Person('Joe');
+Person.addPortfolio('Portfolio1')
+for tick in sharesList:
+    Person.addToPortfolio(tick)
 
-
-sharesList = [ibm, qcom, scty, amzn, ilmn]
-def test():
-    pass
-
-def testReturn():
+print(returnEarningShares(Person.listOfShares()))
+print(returnPE(Person.listOfShares()))
+print(returnPercentYear(Person.listOfShares()))
+print(returnChanges(Person.listOfShares()))

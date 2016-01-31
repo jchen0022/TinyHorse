@@ -29,6 +29,8 @@ class Person(object):
         """
     def addPortfolio(self, title):
         self.portfolio[title] = Portfolio(title)
+    def listOfStocks(self): #MAKE CHANGE LATER SHOULD BE A VARIABLE
+        return self.all_stocks.values()
     def addToPortfolio(self, title, tick):
         """Takes in a portfolio title and stock's tick and 
         adds stock into portfolio
@@ -44,10 +46,12 @@ class Person(object):
             self.all_stocks[tick] = new_stock
         else:
             self.all_stock[tick].num_shares += num_shares
-        self.history[stock.tick][date] = StockHistory(Share(tick), tick, num_shares, date)       #CHANGE THIS DATE NOT WORKING
-    def getDatePrice(self, share):
-        """Returns dict containing all {date: StockHistory}"""
-        return self.history[share.tick]
+        self.history[stock.tick][date] = OriginalStock(Share(tick), tick, num_shares, date)       #CHANGE THIS DATE NOT WORKING
+    def getOriginalStock(self, stock):
+        """Returns dict containing all {date: OriginalStock}"""
+        return self.history[stock.tick]
+    def getStock(self, tick):
+        return self.all_stocks[tick]
         
 class Portfolio(object):
     """Portfolio of investments containing number of investments,
@@ -69,7 +73,7 @@ class Stock(object):
     def getNumShares(self):
         return self.num_shares
 
-class StockHistory(Stock):
+class OriginalStock(Stock):
     """For getting information on stocks previously bought"""
     def __init__(self, share, tick, num_shares, date):
         Stock.__init__(self, share, tick)
@@ -80,4 +84,5 @@ class StockHistory(Stock):
         """Get price of stock at the time of purchase"""
         return self.price
     def getNumShares(self):
+        """Get number of shares that was purchased at the time"""
         return self.num_shares
