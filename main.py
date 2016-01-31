@@ -28,7 +28,7 @@ class Person(object):
         Format: {tick: {date: purchase_information}}
         """
     def addPortfolio(self, title):
-        self.portfolio[title] = Portfolio(title)
+        self.portfolios[title] = Portfolio(title)
     def listOfStocks(self): #MAKE CHANGE LATER SHOULD BE A VARIABLE
         return self.all_stocks.values()
     def addToPortfolio(self, title, tick):
@@ -36,20 +36,23 @@ class Person(object):
         adds stock into portfolio
         Stock must already be owned by Person"""
         if tick not in self.all_stocks:
+            print(tick)
             raise Exception
         stock_location = self.all_stocks[tick]
-        self.portfolio[title].addStock(tick, stock_location)
+        self.portfolios[title].addStock(tick, stock_location)
     def buyShares(self, tick, num_shares, date):
         """Buys (num_shares) shares of (tick) stock. Then documents into Person.history"""
         if tick not in self.all_stocks:
+            print(tick)
             new_stock = Stock(Share(tick), tick)
             self.all_stocks[tick] = new_stock
+            self.history[tick] = {}
         else:
             self.all_stock[tick].num_shares += num_shares
-        self.history[stock.tick][date] = OriginalStock(Share(tick), tick, num_shares, date)       #CHANGE THIS DATE NOT WORKING
-    def getOriginalStock(self, stock):
+        self.history[tick][date] = OriginalStock(Share(tick), tick, num_shares, date)       #CHANGE THIS DATE NOT WORKING
+    def getOriginalStock(self, tick):
         """Returns dict containing all {date: OriginalStock}"""
-        return self.history[stock.tick]
+        return self.history[tick]
     def getStock(self, tick):
         return self.all_stocks[tick]
         
@@ -60,12 +63,12 @@ class Portfolio(object):
         self.title = title
         self.stocks = {}  #TICK: STOCK LOCATED IN PERSON.ALL_STOCKS
     def addStock(self, tick, stock):
-        self.stock[tick] = stock
+        self.stocks[tick] = stock
 
 class Stock(object):
     """All shares of a stock"""
-    def __init__(self, share, tick, num_shares):
-        self.stock_info = stock_info #provided by yahoo-finance module
+    def __init__(self, stock_info, tick):
+        self.stock_info = stock_info #Share class provided by yahoo-finance module
         self.tick = tick
         self.num_shares = 0
     def getPrice(self):
@@ -77,7 +80,7 @@ class OriginalStock(Stock):
     """For getting information on stocks previously bought"""
     def __init__(self, share, tick, num_shares, date):
         Stock.__init__(self, share, tick)
-        self.price = share.getprice()
+        self.price = share.get_price()
         self.date = date
         self.num_shares = num_shares
     def getPrice(self):
