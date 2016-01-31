@@ -1,10 +1,6 @@
 from yahoo_finance import *
 import random, numpy, datetime, pylab, string
 
-### Be ready to change str(share.data_set["Symbol"]) in case you want to
-### have the first values as objects. Consider pylab in mind
-
-
 def returnEarningsShare(sharesList):
     """Returns tuple of ticker names and their
     earnings per share"""
@@ -84,6 +80,15 @@ def returnChanges(sharesList):
         yVals.append(float(share.get_change()))
     return (xVals, yVals)
 
+def getPrice(share, date = datetime.date.today()):
+    """Returns price of input date"""
+    return float(share.get_historical(date, date)[0][u'Close'])
+
+
+### ==========
+### READS AND INSTANTIATES SHARES
+### ==========
+    
 def instantiateShare(line):
     pass
 
