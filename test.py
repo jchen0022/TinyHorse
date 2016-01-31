@@ -3,13 +3,14 @@ from main import *
 sharesList = ["ibm", "qcom", "scty", "amzn", "ilmn"]
 
 Joe = Person('Joe')
-Joe.addPortfolio('Portfolio1')
+Joe.addPortfolio('Tech Stocks')
 for tick in sharesList:
-    Joe.buyShares(tick, 10, 'date')
+    Joe.buyShares(tick, 10, '11-06-2011')
 for tick in sharesList:
-    Joe.addToPortfolio('Portfolio1', tick)
+    Joe.addToPortfolio('Tech Stocks', tick)
 
-print(returnEarningShares(Joe.listOfShares()))
-print(returnPE(Joe.listOfShares()))
-print(returnPercentYear(Joe.listOfShares()))
-print(returnChanges(Joe.listOfShares()))
+print(returnEarningsShare(Joe.listOfStocks()))
+print(returnPE(Joe.listOfStocks()))
+print(returnPercentYear(Joe.listOfStocks()))
+print(returnChanges(Joe.listOfStocks()))
+

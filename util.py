@@ -21,7 +21,10 @@ def returnPE(sharesList):
     yVals = []
     for share in sharesList:
         xVals.append(str(share.data_set["Symbol"]))
-        yVals.append(float(share.get_price_earnings_ratio()))
+        try:
+            yVals.append(float(share.get_price_earnings_ratio()))
+        except TypeError:
+            yVals.append(0)
     return (xVals, yVals)
 
 def returnPercentYear(sharesList):
@@ -30,9 +33,9 @@ def returnPercentYear(sharesList):
     yVals = []
     for share in sharesList:
         xVals.append(str(share.data_set["Symbol"]))
-        yearHigh = share.get_year_high()
-        yearLow = share.get_year_low()
-        percentChange = float((yearHigh - yearLow)/(yearHigh))
+        yearHigh = float(share.get_year_high())
+        yearLow = float(share.get_year_low())
+        percentChange = (yearHigh - yearLow) / (yearHigh)
         yVals.append(percentChange)
     return (xVals, yVals)
 
@@ -78,29 +81,9 @@ def returnChanges(sharesList):
     yVals = []
     for share in sharesList:
         xVals.append(str(share.data_set["Symbol"]))
-        yVals.append(float(share.get_earnings_share()))
+        yVals.append(float(share.get_change()))
     return (xVals, yVals)
 
 def instantiateShare(line):
-    """Instantiates from ticker symbol string"""
-    line = eval("Share('" + line + "')")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    pass
 
