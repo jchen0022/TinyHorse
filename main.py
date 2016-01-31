@@ -1,22 +1,26 @@
 from yahoo_finance import *
 import random, numpy, datetime, pylab
 
+"""
+How do you instantiate a share? Use its ticker symbol.  
+ibm = Share("IBM")
+
+"""
 class Person(object):
     def __init__(self, name):
         self.name = name
-
-class Taxes(object):
-    def __init__(self):
-        pass
-
-class Investments(object):
-    def __init__(self):
-        pass
-
-class Budget(object):
-    def __init__(self):
-        pass
-
+        self.portfolio = [] 
+    def addPortfolio(self, portfolio):
+        self.portfolio.append(portfolio)
+        
+class Portfolio(object):
+    """Portfolio of investments containing number of investments,
+    subject to analyses of individual shares"""
+    def __init__(self, title):
+        self.title = title
+    def addShare(self, share):
+        self.portfolio.append(share)
+    
 
         
     
