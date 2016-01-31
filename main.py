@@ -9,7 +9,7 @@ ibm = Share("IBM")
 class Person(object):
     def __init__(self, name):
         self.name = name
-        self.portfolio = [] 
+        self.portfolios = [] 
     def addPortfolio(self, portfolio):
         self.portfolio.append(portfolio)
         
@@ -18,9 +18,6 @@ class Portfolio(object):
     subject to analyses of individual shares"""
     def __init__(self, title):
         self.title = title
+        self.shares = [];
     def addShare(self, share):
-        self.portfolio.append(share)
-    
-
-        
-    
+        self.shares.append(share)
