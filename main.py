@@ -30,7 +30,7 @@ class Person(object):
     def addPortfolio(self, title):
         self.portfolios[title] = Portfolio(title)
     def listOfStocks(self): #MAKE CHANGE LATER SHOULD BE A VARIABLE
-        [stock_object.stock_info for stock_object in self.all_stocks.values()]
+        return [stock_object.stock_info for stock_object in self.all_stocks.values()]
     def addToPortfolio(self, title, tick):
         """Takes in a portfolio title and stock's tick and 
         adds stock into portfolio
