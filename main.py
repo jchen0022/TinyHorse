@@ -12,10 +12,13 @@ class Person(object):
         self.portfolios = [] 
         self.all_stocks = {} #KEEPS TRACK OF GENERIC TYPES OF STOCK OWNED
         self.history = {} #KEEPS TRACK OF STOCK PURCHASE INFORMATION
-    def addPortfolio(self, portfolio):
-        self.portfolio.append(portfolio)
-    def addToPortfolio(self, stock, portfolio):
-        self.portfolio.addStock(stock)
+    def addPortfolio(self, title):
+        self.portfolio.append(Portfolio(title))
+    def addToPortfolio(self, portfolio, tick):
+        if tick not in self.all_stocks:
+            raise Exception
+        stock_location = self.all_stocks[tick]
+        self.portfolio.addStock(tick, stock_location)
     def buyShares(self, ticks, num, date):
         """add to date and price"""
         if tick not in self.all_stocks:
@@ -33,9 +36,9 @@ class Portfolio(object):
     subject to analyses of individual shares"""
     def __init__(self, title):
         self.title = title
-        self.stock = [];
-    def addStock(self, stock):
-        self.stock.append(stock)
+        self.stocks = {}  #TICK: STOCK LOCATED IN PERSON.ALL_STOCKS
+    def addStock(self, tick, stock):
+        self.stock[tick] = stock
 
 class Stock(object):
     """All shares of a stock"""
