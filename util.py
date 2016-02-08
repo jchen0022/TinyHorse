@@ -1,39 +1,43 @@
 from yahoo_finance import *
 import random, numpy, datetime, pylab, string
 
-def returnEarningsShare(sharesList):
-    """Returns tuple of ticker names and their
-    earnings per share"""
-    xVals = []
-    yVals = []
-    for share in sharesList:
-        xVals.append(str(share.data_set["Symbol"]))
-        yVals.append(float(share.get_earnings_share()))
-    return (xVals, yVals)
+"""
+Philosophy: percent are superior to raw changes.
 
-def returnPE(sharesList):
-    """Returns tuple of ticker names and their PE ratios"""
-    xVals = []
-    yVals = []
-    for share in sharesList:
-        xVals.append(str(share.data_set["Symbol"]))
-        try:
-            yVals.append(float(share.get_price_earnings_ratio()))
-        except TypeError:
-            yVals.append(0)
-    return (xVals, yVals)
+"""
 
-def returnPercentYear(sharesList):
-    """Returns tuple of ticker names and (year high - year low) / (year high)"""
-    xVals = []
-    yVals = []
-    for share in sharesList:
-        xVals.append(str(share.data_set["Symbol"]))
-        yearHigh = float(share.get_year_high())
-        yearLow = float(share.get_year_low())
-        percentChange = (yearHigh - yearLow) / (yearHigh)
-        yVals.append(percentChange)
-    return (xVals, yVals)
+def getPrice(share):
+    return float(share.get_price())
+
+def getName(share):
+    return str(share.data_set['symbol'])
+
+def getMovingAvg50(share):
+    return float(share.get_50day_moving_avg())
+
+def getMovingAvg200(share):
+    return float(share.get_200day_moving_avg())
+
+
+def getEarningsShare(share):
+    return float(share.get_earnings_share())
+    
+def getPE(share):
+    return float(share.get_price_earnings_ratio())
+
+def get_maxChange_year(share):
+    """Returns (year high - year low) / (year low)""" 
+    yearHigh = float(share.get_year_high())
+    yearLow = float(share.get_year_low())
+    maxChange = (yearHigh - yearLow) / (yearLow)
+    return maxChange
+
+def get_change_50day(share):
+    currentPrice = getPrice(share)
+    movingAvg = getMovingAvg50(share)
+    return (movingAvg - currentPrice) / (currentPrice)
+
+# Helpers =====
 
 def stringToDatetime(stringDate): 
     """Converts string to datetime object with date format 'year-month-day' """
@@ -56,7 +60,10 @@ def priceHistory(share, startDate, endDate, timeStep): #Helper function to share
         results.append(priceHistorical)
     return results
 
-def sharesPriceHistory(shareList, startDate, endDate, timeStep = 1):
+# Helpers =====
+
+
+def getPriceHistory(shareList, startDate, endDate, timeStep = 1):
     """Output: (timeStep string list, dictionary[share] = price list)"""
     timeDeltaDatetime = stringToDatetime(endDate) - stringToDatetime(startDate)
     timeDeltaInt = deltaToInt(timeDeltaDatetime)
@@ -70,25 +77,9 @@ def sharesPriceHistory(shareList, startDate, endDate, timeStep = 1):
         sharePrices[share] = priceHistory(share, startDate, endDate, timeStep)
     return (xTime, sharePrices)
     
-def returnChanges(sharesList):
-    """Returns tuple of ticker names list and a list of
-    percent change of price of shares"""
-    xVals = []
-    yVals = []
-    for share in sharesList:
-        xVals.append(str(share.data_set["Symbol"]))
-        yVals.append(float(share.get_change()))
-    return (xVals, yVals)
 
-def getPrice(share, date = datetime.date.today()):
-    """Returns price of input date"""
+def get_price_date(share, date = datetime.date.today()):
     return float(share.get_historical(date, date)[0][u'Close'])
 
 
-### ==========
-### READS AND INSTANTIATES SHARES
-### ==========
-    
-def instantiateShare(line):
-    pass
 
