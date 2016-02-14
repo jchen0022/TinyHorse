@@ -1,5 +1,5 @@
 from yahoo_finance import *
-import random, numpy, datetime, pylab, string
+import random, numpy, datetime, string
 
 """
 Philosophy: percent are superior to raw changes.

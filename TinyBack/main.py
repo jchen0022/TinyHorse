@@ -1,16 +1,22 @@
 from yahoo_finance import *
 import random, datetime
-from instantiations import *
+from share_init import *
 from util import *
+"""
+Philosophy:
+1. Low price compared to 50 day moving average
+2. Possesses long-term value
+3. Factors in opportunity costs of ditching current possessions
 
-shareList = [tsla, qcom, ilmn, ibm, scty, aapl]
+"""
+shareList = [tsla, qcom, ilmn, ibm, scty, aapl, goog]
 def compareShares(sList = shareList):
     for share in sList:
         print str(getName(share)+":")
         print "Biggest change in year: " + str(round(get_maxChange_year(share),3))
-        print "Difference from 50 day average: " + str(round(get_change_50day(share),3))
-        print 
-                  
+        print "Difference from 50 day average: " + str(get_change_200day(share))
+
+
 class Person(object):
     def __init__(self, name):
         self.name = name
@@ -34,7 +40,8 @@ class Person(object):
             self.allPurchases[tick].addShares(tick, numShares, dateBought)
         except KeyError:
             self.allPurchases[tick] = Purchase(tick, numShares, dateBought)
-        
+            
+    # ====================
 
         
 class Portfolio(object):
