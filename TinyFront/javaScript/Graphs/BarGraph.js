@@ -19,8 +19,7 @@ var chartData = {
         highlightFill: "rgba(151,187,205,0.75)",
         highlightStroke: "rgba(151,187,205,1)",
         data: [28, 48, 40, 19, 86, 27, 90]
-    }
-]
+    }]
 };
 
 export default React.createClass({
